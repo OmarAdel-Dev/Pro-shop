@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import "./Header.scss"
-import { Menu, Layout, Image, Button, Input } from 'antd';
+import { Menu, Layout, Image, Input } from 'antd';
 import { ShoppingCartOutlined, LoginOutlined, SearchOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 const Header = () => {
@@ -10,7 +10,7 @@ const Header = () => {
     const [searchField, setSearchField] = useState(false)
 
     return (
-        <Fragment>
+        <div>
             <Header className="header" theme="light">
                 <div className="logo">
                     <Image
@@ -38,7 +38,7 @@ const Header = () => {
                     setSearchField(false);
                 }} />
             </div>
-        </Fragment>
+        </div>
     );
 };
 

@@ -1,14 +1,15 @@
 .header {
-  z-index: 1;
+  z-index: 2;
   position: fixed;
-  left: 23.95%;
+  top: 5%;
+  left: 18.95%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   background-color: white;
   height: 75px;
-  width: 1000px;
+  width: 1200px;
   margin: auto;
   //margin-top: 50px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -40,9 +41,12 @@
 }
 
 .search-field {
-  z-index: 0;
-  width: 1000px;
+  z-index: 1;
+  width: 1200px;
   height: 40px;
+  position: fixed;
+  left: 18.95%;
+  top: 5%;
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -52,7 +56,7 @@
   transition: 0.7s ease-in-out;
   input {
     color: white;
-    width: 950px;
+    width: 1160px;
     background-image: linear-gradient(270deg, #ffba00 0%, #ff6c00 100%);
     border: 0px;
   }
