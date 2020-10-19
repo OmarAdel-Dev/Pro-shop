@@ -1,0 +1,90 @@
+.product-screen {
+  margin-top: 100px;
+  margin: 0 370px;
+  display: flex;
+  flex-direction: column;
+  .product-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    .product-image {
+    }
+
+    .product-details {
+      margin-left: 50px;
+      width: 390px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      h2 {
+        font-weight: bold;
+      }
+
+      h1 {
+        font-weight: bold;
+        color: orange;
+      }
+
+      .product-info {
+        list-style: none;
+        padding: 0px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid lightgrey;
+        .product-info-item {
+          font-weight: lighter;
+        }
+      }
+
+      p {
+        padding-top: 10px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid lightgrey;
+      }
+
+      .rate {
+        width: 100%;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        .ant-btn {
+          margin-left: auto;
+          &:hover {
+            border-color: orange;
+          }
+        }
+      }
+
+      .add-to-cart {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 20px;
+
+        span {
+          font-size: 15px;
+        }
+        .ant-input-number {
+          margin: 0 10px;
+        }
+        .add-to-cart-btn {
+          background-color: orange;
+          border-color: orange;
+
+          &:hover {
+            background-color: darkorange;
+          }
+        }
+      }
+    }
+  }
+
+  .ant-breadcrumb-link {
+    &:hover {
+      color: orange !important;
+    }
+  }
+}
