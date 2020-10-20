@@ -1,19 +1,22 @@
-import React, { Fragment } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Products from "../../products";
 import "./ProductScreen.scss";
-import { Button, InputNumber, Rate, PageHeader, Breadcrumb } from "antd";
-import {
-  LeftCircleOutlined,
-  RightCircleOutlined,
-  PlusOutlined,
-  HomeOutlined,
-  ArrowLeftOutlined,
-  HeartTwoTone,
-} from "@ant-design/icons";
+import { Button, InputNumber, Rate, Breadcrumb } from "antd";
+import { PlusOutlined, HomeOutlined, HeartTwoTone } from "@ant-design/icons";
+import axios from "axios";
 
 const ProductScreen = ({ match }) => {
-  const product = Products.find((prod) => prod._id === match.params.id);
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/product/${match.params.id}`);
+      setProduct(data);
+    };
+    fetchProduct();
+
+    // eslint-disable-next-line
+  }, [match]);
 
   const routes = [
     {
