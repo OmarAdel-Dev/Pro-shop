@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'
 import Product from "../../components/Product/Product";
 import "./HomeScreen.scss";
-import axios from "axios";
+import { productsList } from '../../actions/productActions'
+import { Alert, Spin } from 'antd';
 
 const HomeScreen = () => {
-  const [products, setProducts] = useState([]);
+
+  const productList = useSelector(state => state.productList);
+  const { loading, error, products } = productList;
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get("/api/products");
-      setProducts(data);
-    };
-    fetchProducts();
-  }, []);
+    dispatch(productsList())
+  }, [dispatch]);
 
   return (
     <div className="latest-products">
@@ -20,9 +22,12 @@ const HomeScreen = () => {
         Latest <span>Products</span>
       </h2>
       <div className="products-container">
-        {products.map((product) => (
-          <Product product={product} />
-        ))}
+        {loading ?
+          <Spin size="large" tip="Loading..." />
+          : error ? <Alert message={error} type="error" showIcon /> :
+            products.map((product) => (
+              <Product product={product} />
+            ))}
       </div>
     </div>
   );
