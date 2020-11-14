@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import ProductScreen from "./screens/ProductScreen/ProductScreen";
+import CartScreen from "./screens/CartScreen/CartScreen";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
         <div className="app-screens">
           <Switch>
             <Route exact path="/" component={HomeScreen} />
-            <Route exact path="/product/:id" component={ProductScreen} />
+            <Route path="/product/:id" component={ProductScreen} />
+            <Route path="/cart/:id?" component={CartScreen} />
           </Switch>
         </div>
         <Footer />

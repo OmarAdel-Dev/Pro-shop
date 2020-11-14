@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from "react-router-dom";
+import { Link, history } from "react-router-dom";
 import "./ProductScreen.scss";
 import { Button, InputNumber, Rate, Breadcrumb, Spin, Alert } from "antd";
 import { PlusOutlined, HomeOutlined, HeartTwoTone } from "@ant-design/icons";
 import { productDetials } from '../../actions/productActions'
 
-const ProductScreen = ({ match }) => {
+const ProductScreen = ({ history, match }) => {
+
+  const [qty, setQty] = useState(0);
 
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails;
-
-  console.log(loading)
 
   const dispatch = useDispatch()
 
@@ -20,20 +20,10 @@ const ProductScreen = ({ match }) => {
     // eslint-disable-next-line
   }, [dispatch, match]);
 
-  const routes = [
-    {
-      path: "index",
-      breadcrumbName: "First-level Menu",
-    },
-    {
-      path: "first",
-      breadcrumbName: "Second-level Menu",
-    },
-    {
-      path: "second",
-      breadcrumbName: "Third-level Menu",
-    },
-  ];
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`)
+  }
+
 
   return (
     <div className="product-screen">
@@ -76,13 +66,18 @@ const ProductScreen = ({ match }) => {
                   />
                 </div>
                 <div className="d-flex row add-to-cart">
-                  <span>Quantity:</span>
-                  <InputNumber min={1} max={product.countInStock} defaultValue={1} />
+                  {product.countInStock > 0 &&
+                    <>
+                      <span>Quantity:</span>
+                      <InputNumber min={0} max={product.countInStock} defaultValue={0} value={qty} onChange={setQty} />
+                    </>}
                   <Button
                     className="add-to-cart-btn"
                     type="primary"
                     icon={<PlusOutlined />}
                     size="middle"
+                    disabled={product.countInStock === 0}
+                    onClick={addToCartHandler}
                   >
                     Add to cart
             </Button>
