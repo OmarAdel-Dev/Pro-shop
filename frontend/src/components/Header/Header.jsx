@@ -1,19 +1,40 @@
 import React, { useState } from "react";
 import "./Header.scss";
-import { c, Link } from "react-router-dom";
-import { Menu, Layout, Image, Input } from "antd";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux"
+import { userLogout } from "../../actions/userActions"
+import { Menu, Layout, Input } from "antd";
 import {
   ShoppingCartOutlined,
   LoginOutlined,
   SearchOutlined,
   CloseCircleOutlined,
+  UserOutlined,
+  ProfileOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 
+
 const Header = () => {
+
   const { Header } = Layout;
+  const { SubMenu } = Menu;
+
+  let history = useHistory()
 
   const [searchField, setSearchField] = useState(false);
   const [selectedKey, setSelectedKey] = useState(null);
+
+  const state = useSelector(state => state.userLogin)
+  const { userInfo } = state
+
+  const dispatch = useDispatch()
+
+  const logoutHandler = () => {
+    dispatch(userLogout())
+    history.push("/login")
+  }
+
 
   return (
     <div>
@@ -46,13 +67,25 @@ const Header = () => {
             <Link to="/cart">Cart</Link>
           </Menu.Item>
 
-          <Menu.Item
-            className="navbar-item"
-            key="login"
-            icon={<LoginOutlined />}
-          >
-            <Link to="/login">Sign In</Link>
-          </Menu.Item>
+          {
+            userInfo ?
+              <SubMenu
+                key="SubMenu"
+                icon={<UserOutlined />}
+                title={userInfo.name}
+              >
+                <Menu.Item key="setting:1" icon={<ProfileOutlined />}><Link to="/profile">Profile</Link></Menu.Item>
+                <Menu.Item key="setting:2" icon={<LogoutOutlined />} onClick={() => logoutHandler()}>Logout</Menu.Item>
+              </SubMenu>
+              : <Menu.Item
+                className="navbar-item"
+                key="login"
+                icon={<LoginOutlined />}
+              >
+                <Link to="/login">Sign In</Link>
+              </Menu.Item>
+          }
+
           <Menu.Item
             className="navbar-item"
             icon={<SearchOutlined />}
