@@ -4,11 +4,11 @@ import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import "./LoginScreen.scss"
+import { Link } from 'react-router-dom';
 const LoginScreen = ({ location, history }) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [isSubmit, setIsSubmit] = useState(false)
 
     const redirect = location.search ? location.search.split("=")[1] : "/"
 
@@ -39,7 +39,6 @@ const LoginScreen = ({ location, history }) => {
 
     const onFinish = () => {
         dispatch(userLogin(email, password))
-        setIsSubmit(true)
     };
 
     return (
@@ -90,7 +89,10 @@ const LoginScreen = ({ location, history }) => {
                 <Button type="primary" htmlType="submit" className="login-form-button">
                     Log in
             </Button>
-            Or <a href="">register now!</a>
+                <span>Or </span>
+                <Link to="/register">
+                    register now!
+                </Link>
             </Form.Item>
         </Form>
     );
