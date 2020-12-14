@@ -1,48 +1,60 @@
 import React, { useState, useEffect } from 'react'
-import { userRegister } from '../../actions/userActions'
+import { getUserDetails, updateUserDetails } from '../../actions/userActions'
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import "../LoginScreen/LoginScreen.scss"
-import { Link } from 'react-router-dom';
+import "./ProfileScreen.scss"
 
-const RegisterScreen = ({ location, history }) => {
+const ProfileScreen = ({ history }) => {
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("")
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [isSubmit, setIsSubmit] = useState(false)
 
-    const redirect = location.search ? location.search.split("=")[1] : "/"
+    const stateDetails = useSelector(state => state.userDetails);
+    const { user } = stateDetails;
 
-    const state = useSelector(state => state.userRegister);
-    const { userInfo, loading, error } = state;
+    const stateLogin = useSelector(state => state.userLogin);
+    const { userInfo } = stateLogin;
+
+    const stateUpdate = useSelector(state => state.userUpdateProfile);
+    const { loading, userInfo: userUpdatedInfo, error } = stateUpdate;
 
     const dispatch = useDispatch();
 
     const key = 'updatable'
 
     useEffect(() => {
-        console.log(userInfo)
-        if (userInfo)
-            history.push(redirect);
-
-    }, [history, userInfo])
+        if (!userInfo)
+            history.push("/login");
+        else {
+            if (!user.name) {
+                dispatch(getUserDetails("profile"))
+            }
+            else if (user) {
+                console.log(user.name, user.email)
+                setName(user.name)
+                setEmail(user.email)
+            }
+        }
+    }, [userInfo, user])
 
     useEffect(() => {
-
-        console.log(loading)
-        if (loading)
-            message.loading("Registering...", key)
-        else if (loading === false && userInfo)
-            message.success({ content: 'Welcome to ProShop!', key, duration: 2 });
-        else if (loading === false && error)
-            message.error({ content: error, key, duration: 2 });
-
+        if (isSubmit) {
+            if (loading)
+                message.loading("Updating..", key)
+            else if (loading === false && userUpdatedInfo)
+                message.success({ content: 'Updated Succefully!', key, duration: 2 });
+            else if (loading === false && error)
+                message.error({ content: error, key, duration: 2 });
+        }
     }, [loading])
 
     const onFinish = () => {
-        dispatch(userRegister(name, email, password))
+        dispatch(updateUserDetails({ id: user._id, name, email, password }))
+        setIsSubmit(true)
     };
 
     return (
@@ -131,16 +143,12 @@ const RegisterScreen = ({ location, history }) => {
 
             <Form.Item>
                 <Button type="primary" htmlType="submit" className="login-form-button">
-                    Register
+                    Update Profile
             </Button>
-                <span>Already have an acount! </span>
-                <Link to="/login">
-                    login
-            </Link>
             </Form.Item>
         </Form>
     );
 }
 
-export default RegisterScreen
+export default ProfileScreen
 

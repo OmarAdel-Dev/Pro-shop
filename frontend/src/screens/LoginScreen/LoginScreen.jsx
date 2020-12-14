@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { userLogin } from '../../actions/userActions'
 import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import "./LoginScreen.scss"
 import { Link } from 'react-router-dom';
@@ -70,12 +70,13 @@ const LoginScreen = ({ location, history }) => {
                     },
                 ]}
             >
-                <Input
+                <Input.Password
                     prefix={<LockOutlined className="site-form-item-icon" />}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type="password"
                     placeholder="Password"
+                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                 />
             </Form.Item>
             <Form.Item>
