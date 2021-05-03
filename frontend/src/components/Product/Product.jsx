@@ -12,7 +12,7 @@ const Product = ({ product }) => {
     <Link to={`/product/${_id}`}>
       <Card
         hoverable
-        style={{ width: 240 }}
+        style={{ width: 240 ,height: 360}}
         cover={<img alt="example" src={image} />}
       >
         <Meta title={category} />

@@ -9,12 +9,12 @@ const HomeScreen = () => {
 
   const productList = useSelector(state => state.productList);
   const { loading, error, products } = productList;
-
+  // debugger;
   const dispatch = useDispatch()
-
+  console.log(productList)
   useEffect(() => {
     dispatch(productsList())
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="latest-products">
@@ -24,7 +24,8 @@ const HomeScreen = () => {
       <div className="products-container">
         {loading ?
           <Spin size="large" tip="Loading..." />
-          : error ? <Alert message={error} type="error" showIcon /> :
+          :
+           error ? <Alert message={error} type="error" showIcon /> :
             products.map((product) => (
               <Product product={product} />
             ))}

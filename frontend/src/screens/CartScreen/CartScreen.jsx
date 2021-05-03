@@ -53,6 +53,7 @@ const CartScreen = ({ match, location, history }) => {
                     </List.Item>
                 )}
             />
+            <Button onClick={()=> history.push({pathname: '/shipping',search: '?redirect=search-string',})}>Proceed to checkout</Button>
         </div>
     )
 }

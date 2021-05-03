@@ -1,4 +1,4 @@
-export const productListReducers = (state = { products: [] }, action) => {
+export const productListReducers = (state = { loading: true,products: [] }, action) => {
   switch (action.type) {
     case "PRODUCT_LIST_REQUEST":
       return { loading: true, products: [] };
@@ -12,7 +12,7 @@ export const productListReducers = (state = { products: [] }, action) => {
 };
 
 export const productDetailsReducers = (
-  state = { product: { reviews: [] } },
+  state = { product: { loading: true,reviews: [] } },
   action
 ) => {
   switch (action.type) {

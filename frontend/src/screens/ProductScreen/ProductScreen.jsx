@@ -24,11 +24,12 @@ const ProductScreen = ({ history, match }) => {
     history.push(`/cart/${match.params.id}?qty=${qty}`)
   }
 
+  console.log(loading)
 
   return (
     <div className="product-screen">
 
-      {loading ?
+      {loading?
         <Spin size="large" tip="Loading..." />
         : error ? <Alert message={error} type="error" showIcon /> :
           <>

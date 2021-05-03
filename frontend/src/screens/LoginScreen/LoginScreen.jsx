@@ -87,7 +87,7 @@ const LoginScreen = ({ location, history }) => {
             </Form.Item>
 
             <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
+                <Button type="primary" htmlType="submit" className="login-form-button" loading={loading}>
                     Log in
             </Button>
                 <span>Or </span>

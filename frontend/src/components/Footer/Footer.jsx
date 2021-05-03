@@ -6,10 +6,7 @@ const Footer = () => {
     const { Footer } = Layout;
 
     return (
-        <div>
-            <div className="">
-
-            </div>
+        <div  className="" style={{zIndex: '1'}}>
             <Footer style={{ textAlign: 'center' }}>Copyright ©2020 All rights reserved</Footer>
         </div>
 

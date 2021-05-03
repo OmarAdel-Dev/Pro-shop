@@ -9,6 +9,10 @@ import CartScreen from "./screens/CartScreen/CartScreen";
 import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
+import ShippingScreen from "./screens/ShippingScreen/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen/PaymentScreen";
+
+import ProtectedRoute from "./utils/ProtectedRoute"
 
 function App() {
   return (
@@ -22,7 +26,9 @@ function App() {
             <Route path="/cart/:id?" component={CartScreen} />
             <Route path="/login" component={LoginScreen} />
             <Route path="/register" component={RegisterScreen} />
-            <Route path="/profile" component={ProfileScreen} />
+            <ProtectedRoute path="/profile" component={ProfileScreen} />
+            <ProtectedRoute path="/shipping" component={ShippingScreen} />
+            <ProtectedRoute path="/payment" component={PaymentScreen} />
           </Switch>
         </div>
         <Footer />

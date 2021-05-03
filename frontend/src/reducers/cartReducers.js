@@ -1,4 +1,7 @@
-export const cartItemsReducers = (state = { cartItems: [] }, action) => {
+export const cartItemsReducers = (
+  state = { cartItems: [], shippingAddress: {} },
+  action
+) => {
   switch (action.type) {
     case "CART_ADD_ITEM":
       const tempItem = action.payload;
@@ -21,6 +24,16 @@ export const cartItemsReducers = (state = { cartItems: [] }, action) => {
         cartItems: state.cartItems.filter(
           (item) => item.product !== action.payload
         ),
+      };
+    case "CART_SAVE_SHIPPING_ADDRESS":
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
+    case "CART_SAVE_PAYMENT_METHOD":
+      return {
+        ...state,
+        paymentMehtod: action.payload,
       };
     default:
       return state;

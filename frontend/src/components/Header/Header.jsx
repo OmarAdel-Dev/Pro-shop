@@ -32,7 +32,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(userLogout())
-    history.push("/login")
+    history.push("/")
   }
 
 
