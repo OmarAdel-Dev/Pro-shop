@@ -1,0 +1,17 @@
+.cart-screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cartlist{
+    width: 950px;
+    height: 460px;
+    margin: auto;
+    overflow: auto;
+}
+
+.proceed-button{
+    margin:auto;
+    margin-top: 20px;
+}

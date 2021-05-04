@@ -29,6 +29,7 @@ const CartScreen = ({ match, location, history }) => {
     return (
         <div className="cart-screen">
             <List
+                className="cartlist"
                 bordered
                 itemLayout="horizontal"
                 dataSource={cartItems}
@@ -53,7 +54,7 @@ const CartScreen = ({ match, location, history }) => {
                     </List.Item>
                 )}
             />
-            <Button onClick={()=> history.push({pathname: '/shipping',search: '?redirect=search-string',})}>Proceed to checkout</Button>
+            <Button className="proceed-button" type="primary" onClick={()=> history.push('/shipping')}>Proceed to checkout</Button>
         </div>
     )
 }
