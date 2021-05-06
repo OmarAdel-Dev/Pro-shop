@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Row, Col, Divider,List, Avatar, Table} from 'antd';
+import { Button, Row, Col, Divider,List, Avatar, Table, message} from 'antd';
+import { createOrder } from "../../actions/orderActions"
 import { useDispatch, useSelector } from 'react-redux';
 import "./PlaceorderScreen.scss"
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps"
@@ -7,20 +8,26 @@ import { Link } from 'react-router-dom';
 
 const PlaceorderScreen = () => {
     const { Column, ColumnGroup } = Table;
+    
+    const dispatch = useDispatch();
+
     const cart = useSelector(state => state.cart)
     const {shippingAddress, paymentMethod, cartItems} = cart;
 
+    const order = useSelector(state => state.order)
+    const {loading, success, error} = order;
+
     const addDecimals = (num) => (num).toFixed(2);
         
-    const ItemsPrice = addDecimals(cartItems.reduce((total,{price, qty}) => total + price * qty,0));
-    const shippingPrice = ItemsPrice > 100 ? 0 : 100;
-    const taxPrice = addDecimals(Number(0.15*ItemsPrice));
-    const totalPrice = addDecimals(Number(ItemsPrice)+Number(shippingPrice)+Number(taxPrice));
+    const itemsPrice = addDecimals(cartItems.reduce((total,{price, qty}) => total + price * qty,0));
+    const shippingPrice = itemsPrice > 100 ? 0 : 100;
+    const taxPrice = addDecimals(Number(0.15*itemsPrice));
+    const totalPrice = addDecimals(Number(itemsPrice)+Number(shippingPrice)+Number(taxPrice));
 
     const dataSource = [
         {
             field: 'Items',
-            value: `$${ItemsPrice}`,
+            value: `$${itemsPrice}`,
         },
         {
             field: 'Shipping',
@@ -36,13 +43,30 @@ const PlaceorderScreen = () => {
         },
       ];
 
-    const placeOrderHandler = (params) => {
-        
+    const placeOrderHandler = () => {
+        dispatch(createOrder({
+            orderItems: cartItems,
+            shippingAddress: shippingAddress,
+            paymentMethod: paymentMethod,
+            itemsPrice: itemsPrice,
+            taxPrice: taxPrice,
+            shippingPrice: shippingPrice,
+            totalPrice: totalPrice
+        }))
     }
+
+    const key = 'updatable'
     
     useEffect(() => {
-        console.log(paymentMethod)
-    }, [paymentMethod])
+        console.log(loading)
+        if (loading)
+            message.loading({content: "Creating order...", key})
+        else if (loading === false && order.order)
+            message.success({ content: 'Order Created!', key, duration: 2 });
+        else if (loading === false && error)
+            message.error({ content: error, key, duration: 2 });
+
+    }, [loading,success])
 
     return (
         <>

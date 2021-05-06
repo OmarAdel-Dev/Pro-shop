@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartItem, removeCartItem } from "../../actions/cartActions"
-import { List, Avatar, Button, InputNumber, Empty } from 'antd';
+import { List, Avatar, Button, InputNumber, Empty, message } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
 import "./CartScreen.scss"
@@ -25,6 +25,14 @@ const CartScreen = ({ match, location, history }) => {
             dispatch(addCartItem(productId, qty))
         }
     }, [dispatch, productId, qty])
+
+    const proceedToCheckoutHandler = () => {
+        if(cartItems.length === 0)
+            message.error({ content: "Can't proceed to checkout with no cart items", duration: 2 });
+        else
+            history.push('/shipping')
+    }
+    
 
     return (
         <div className="cart-screen">
@@ -54,7 +62,7 @@ const CartScreen = ({ match, location, history }) => {
                     </List.Item>
                 )}
             />
-            <Button className="proceed-button" type="primary" onClick={()=> history.push('/shipping')}>Proceed to checkout</Button>
+            <Button className="proceed-button" type="primary" onClick={proceedToCheckoutHandler}>Proceed to checkout</Button>
         </div>
     )
 }
