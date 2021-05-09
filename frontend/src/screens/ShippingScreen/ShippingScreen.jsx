@@ -31,10 +31,10 @@ const ShippingScreen = ({ history }) => {
                 className="address-form"
                 onFinish={onFinish}
                 initialValues={{
-                    ["address"]: address ? address : "",
-                    ["city"]: city ? city : "",
-                    ["postalCode"]: postalCode ? postalCode : "",
-                    ["country"]: country ? country : "",
+                    address: address ? address : "",
+                    city: city ? city : "",
+                    postalCode: postalCode ? postalCode : "",
+                    country: country ? country : "",
                 }}
             >
 

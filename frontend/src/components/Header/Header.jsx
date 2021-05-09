@@ -46,7 +46,7 @@ const Header = () => {
               setSelectedKey(null);
             }}
           >
-            <img src="/logo.png" />
+            <img src="/logo.png" alt="ProShop logo"/>
             <span>PROSHOP</span>
           </div>
         </Link>
