@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Row, Col, Divider,List, Avatar, Table, message} from 'antd';
-import { createOrder } from "../../actions/orderActions"
+import { clearOrderDetails, createOrder } from "../../actions/orderActions"
 import { useDispatch, useSelector } from 'react-redux';
 import "./PlaceorderScreen.scss"
 import CheckoutSteps from "../../components/CheckoutSteps/CheckoutSteps"
 import { Link } from 'react-router-dom';
 
 const PlaceorderScreen = () => {
+
+    const [isSubmitOrder, setIsSubmitOrder] = useState(false);
+
     const { Column, ColumnGroup } = Table;
     
     const dispatch = useDispatch();
@@ -15,7 +18,7 @@ const PlaceorderScreen = () => {
     const {shippingAddress, paymentMethod, cartItems} = cart;
 
     const order = useSelector(state => state.order)
-    const {loading, success, error} = order;
+    const {loading, error} = order;
 
     const addDecimals = (num) => (num).toFixed(2);
         
@@ -44,6 +47,7 @@ const PlaceorderScreen = () => {
       ];
 
     const placeOrderHandler = () => {
+        setIsSubmitOrder(true)
         dispatch(createOrder({
             orderItems: cartItems,
             shippingAddress: shippingAddress,
@@ -58,15 +62,23 @@ const PlaceorderScreen = () => {
     const key = 'updatable'
     
     useEffect(() => {
-        console.log(loading)
         if (loading)
             message.loading({content: "Creating order...", key})
-        else if (loading === false && order.order)
+        else if (loading === false && order.order){
             message.success({ content: 'Order Created!', key, duration: 2 });
-        else if (loading === false && error)
+            
+        }
+        else if (loading === false && error){
             message.error({ content: error, key, duration: 2 });
+            
+        }
 
-    }, [loading,success])
+        return ()=>{
+           dispatch(clearOrderDetails())
+        }
+    }, [loading])
+
+    console.log(order,loading)
 
     return (
         <>
